@@ -1,6 +1,9 @@
 const alistair = require('alistair/prettier');
 
 module.exports = {
-	...alistair,
+	tabWidth: 4,
+	singleQuote: true,
+	trailingComma: 'all',
+	semi: true,
 	plugins: ['prettier-plugin-tailwindcss'],
 };
