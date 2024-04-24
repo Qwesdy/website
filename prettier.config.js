@@ -1,5 +1,3 @@
-const alistair = require('alistair/prettier');
-
 module.exports = {
     tabWidth: 4,
     singleQuote: true,
