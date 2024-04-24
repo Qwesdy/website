@@ -1,5 +1,5 @@
 export function codeblock(code: string, lang = 'ts') {
-	return `\`\`\`${lang}
+    return `\`\`\`${lang}
 ${code}
 \`\`\``;
 }
