@@ -31,8 +31,6 @@ import { ContactForm } from '../components/contact-form';
 import { CardHoverEffect, hoverClassName } from '../components/hover-card';
 import { Time } from '../components/time';
 import matrix from '../images/matrix.gif';
-import me from '../images/me.jpg';
-import { getMapURL } from '../server/apple-maps';
 import { env } from '../server/env';
 import { getLanyard } from '../server/lanyard';
 import { age, discordId } from '../utils/constants';
@@ -40,7 +38,7 @@ import { formatList } from '../utils/lists';
 
 export interface Props {
     lanyard: Data;
-    map: string;
+    // map: string;
     location: string;
 }
 
@@ -48,12 +46,12 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     const lanyard = await getLanyard(discordId);
     const location = lanyard.kv.location ?? env.DEFAULT_LOCATION;
 
-    const map = getMapURL(location);
+    // const map = getMapURL(location);
 
     return {
         revalidate: 10,
         props: {
-            map,
+            // map,
             location,
             lanyard,
         },
@@ -281,7 +279,7 @@ export default function Home(props: Props) {
                     )}
                 </CardHoverEffect>
 
-                <div className="group relative col-span-3 flex h-full min-h-[13rem] flex-shrink-0 overflow-hidden rounded-2xl">
+                {/* <div className="group relative col-span-3 flex h-full min-h-[13rem] flex-shrink-0 overflow-hidden rounded-2xl">
                     <img
                         src={props.map}
                         className="absolute inset-0 h-full w-full scale-[1.25] bg-black object-cover object-center"
@@ -308,7 +306,7 @@ export default function Home(props: Props) {
                             📍 {props.location}
                         </p>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="col-span-3 flex items-center justify-center rounded-2xl bg-fuchsia-700 p-6 text-fuchsia-100 md:col-span-2">
                     <div className="grid w-full grid-cols-4 grid-rows-4 gap-4 [&>svg]:w-full [&>svg]:text-center">
