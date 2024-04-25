@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 import type { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { FiArrowUpRight } from 'react-icons/fi';
@@ -34,7 +33,6 @@ import { Time } from '../components/time';
 import matrix from '../images/matrix.gif';
 import me from '../images/me.jpg';
 import { getMapURL } from '../server/apple-maps';
-import { getRecentBlogPosts, type PartialBlogPost } from '../server/blog';
 import { env } from '../server/env';
 import { getLanyard } from '../server/lanyard';
 import { age, discordId } from '../utils/constants';
@@ -44,7 +42,6 @@ export interface Props {
     lanyard: Data;
     map: string;
     location: string;
-    recentBlogPosts: PartialBlogPost[];
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
@@ -53,18 +50,12 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
     const map = getMapURL(location);
 
-    const allBlogPosts = await getRecentBlogPosts();
-    const recentBlogPosts = allBlogPosts
-        .sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix())
-        .slice(0, 3);
-
     return {
         revalidate: 10,
         props: {
             map,
             location,
             lanyard,
-            recentBlogPosts,
         },
     };
 };
@@ -367,34 +358,6 @@ export default function Home(props: Props) {
                         Live. Either that or I'll be out riding my Boosted
                         Board.
                     </p>
-                </div>
-
-                <div className="col-span-6 space-y-1 rounded-2xl bg-yellow-500 p-6 text-black md:col-span-6">
-                    <h1 className="font-semibold text-black/70">
-                        Recent Blog Posts{' '}
-                        <span className="text-yellow-800">
-                            <Link href="https://alistair.blog">
-                                — alistair.blog
-                            </Link>
-                        </span>
-                    </h1>
-
-                    <div className="space-y-2 pt-2">
-                        {props.recentBlogPosts.slice(0, 3).map((post) => {
-                            return (
-                                <Link
-                                    className="-mx-6 block px-6 py-2 hover:bg-yellow-600/50"
-                                    key={post.slug}
-                                    href={`https://alistair.blog/${post.slug}`}
-                                >
-                                    <h2 className="text-black">{post.name}</h2>
-                                    <p className="line-clamp-2 text-black/80">
-                                        {post.excerpt}
-                                    </p>
-                                </Link>
-                            );
-                        })}
-                    </div>
                 </div>
 
                 <div className="col-span-6 space-y-4 rounded-2xl bg-lime-400 p-6 text-black md:col-span-6 dark:bg-lime-500">
